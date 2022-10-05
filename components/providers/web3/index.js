@@ -40,10 +40,10 @@ export default function Web3Provider({ children }) {
   }, []);
 
   const _web3Api = useMemo(() => {
-    const { web3 } = web3Api;
+    const { web3, provider } = web3Api;
     return {
       ...web3Api,
-      getHooks: () => setupHooks(web3),
+      getHooks: () => setupHooks(web3, provider),
       connect: () => connectWallet,
     };
   }, [web3Api]);
