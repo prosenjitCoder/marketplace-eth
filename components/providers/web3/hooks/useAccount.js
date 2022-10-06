@@ -20,11 +20,9 @@ export const handler = (web3, provider) => () => {
   }, [provider]);
 
   return {
-    account: {
-      data,
-      isAdmin: (data && adminAddresses[data]) ?? false,
-      mutate,
-      ...rest,
-    },
+    data,
+    isAdmin: (data && adminAddresses[data]) ?? false,
+    mutate,
+    ...rest,
   };
 };

@@ -1,11 +1,11 @@
 import { useWeb3 } from "@components/providers";
 import Link from "next/link";
 import { Button } from "@components/ui/common";
-import { useAccount } from "@components/hooks/web3/useAccount";
+import { useAccount } from "@components/hooks/web3";
 import { useRouter } from "next/router";
 
 const Navbar = () => {
-  const { connect, isLoading, web3 } = useWeb3();
+  const { connect, isLoading, requireInstall } = useWeb3();
   const { account } = useAccount();
   const { pathname } = useRouter();
 
@@ -47,20 +47,18 @@ const Navbar = () => {
               </Link>
               {isLoading ? (
                 <Button disabled={true}>Loading...</Button>
-              ) : web3 != null ? (
-                account.data ? (
-                  <Button
-                    className="cursor-default"
-                    variant="purple"
-                    hoverable={false}
-                  >
-                    Hi there {account.isAdmin && "Admin"}
-                  </Button>
-                ) : (
-                  <Button onClick={connect()}>Connect</Button>
-                )
-              ) : (
+              ) : account.data ? (
+                <Button
+                  className="cursor-default"
+                  variant="purple"
+                  hoverable={false}
+                >
+                  Hi there {account.isAdmin && "Admin"}
+                </Button>
+              ) : requireInstall ? (
                 <Button onClick={installMetamask}>Install metamask</Button>
+              ) : (
+                <Button onClick={connect()}>Connect</Button>
               )}
             </div>
           </div>
