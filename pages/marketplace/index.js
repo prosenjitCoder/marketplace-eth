@@ -7,6 +7,10 @@ import { OrderModal } from "@components/ui/order";
 import { useState } from "react";
 import { MarketHeader } from "@components/ui/marketplace";
 
+const purchaseCourse = (order) => {
+  alert(JSON.stringify(order));
+};
+
 const Marketplace = ({ courses }) => {
   const { canPurchaseCourse } = useWalletInfo();
   const [selectedCourse, setSelectedCourse] = useState(null);
@@ -38,6 +42,7 @@ const Marketplace = ({ courses }) => {
       </CourseList>
       {selectedCourse && (
         <OrderModal
+          onSubmit={purchaseCourse}
           course={selectedCourse}
           onClose={() => setSelectedCourse(null)}
         />
