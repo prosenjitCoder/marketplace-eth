@@ -19,9 +19,11 @@ const LINKS = [
 const Header = () => {
   return (
     <>
-      <WalletBar />
+      <div className="pt-4">
+        <WalletBar />
+      </div>
       <EthRates />
-      <div className="pb-4 px-4 sm:px-6 lg:px-8 flex flex-row-reverse">
+      <div className="p-4 sm:px-6 lg:px-8 flex flex-row-reverse">
         <Breadcrumbs items={LINKS} />
       </div>
     </>
