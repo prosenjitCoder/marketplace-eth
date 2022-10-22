@@ -1,3 +1,8 @@
+import { useAccount } from "@components/hooks/web3";
+import { useWeb3 } from "@components/providers";
+import { Loader } from "@components/ui/common";
+import Link from "next/link";
+
 const lectures = [
   "How to init App",
   "How to get a help",
@@ -10,7 +15,9 @@ const lectures = [
 const accessStatus =
   "px-2 inline-flex text-xs leading-5 font-semibold rounded-full";
 
-const Curriculum = ({ locked }) => {
+const Curriculum = ({ locked, courseState }) => {
+  const { connect, isLoading } = useWeb3();
+  const { account } = useAccount();
   return (
     <section className="max-w-5xl mx-auto">
       <div className="flex flex-col">
@@ -61,12 +68,40 @@ const Curriculum = ({ locked }) => {
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a
-                          href="#"
-                          className="text-indigo-600 hover:text-indigo-900"
-                        >
-                          {locked ? "Get Access" : "Play"}
-                        </a>
+                        {isLoading ? (
+                          <Loader />
+                        ) : locked ? (
+                          <>
+                            {courseState === "deactivated" && (
+                              <Link href="/marketplace">
+                                <a className="text-red-600 hover:text-red-900">
+                                  Get access
+                                </a>
+                              </Link>
+                            )}
+                            {courseState === "purchased" && (
+                              <Link href="/faq">
+                                <a className="text-yellow-600 hover:text-yellow-900">
+                                  Waiting for activation...
+                                </a>
+                              </Link>
+                            )}
+                            {courseState === undefined && !account.data && (
+                              <span
+                                onClick={connect()}
+                                className="text-indigo-500 hover:text-indigo-900 text-base cursor-pointer"
+                              >
+                                Connect
+                              </span>
+                            )}
+                          </>
+                        ) : (
+                          <Link href="/watch">
+                            <a className="text-green-600 hover:text-green-900">
+                              Watch now
+                            </a>
+                          </Link>
+                        )}
                       </td>
                     </tr>
                   ))}
