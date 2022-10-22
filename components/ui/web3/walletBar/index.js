@@ -22,7 +22,7 @@ const WalletBar = () => {
           </div>
           <div>
             {network.hasInitialResponse && !network.isSupported && (
-              <div className="bg-red-400 p-4">
+              <div className="bg-red-100 text-red-900 p-3 rounded">
                 <div>Connected to wrong network</div>
                 <div>
                   Connect to:{" "}
@@ -31,7 +31,7 @@ const WalletBar = () => {
               </div>
             )}
             {requireInstall && (
-              <div className="bg-yellow-500 p-4 rounded-lg">
+              <div className="bg-yellow-100 text-yellow-900 font-medium p-4 rounded-lg">
                 Can not connect to network. Please install Metamask.
               </div>
             )}

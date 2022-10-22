@@ -3,19 +3,12 @@ import { Button } from "@components/ui/common";
 import { useAccount } from "@components/hooks/web3";
 import { useRouter } from "next/router";
 import { ActiveLink } from "@components/ui/common";
+import { installMetamask } from "@utils/installMetamask";
 
 const Navbar = () => {
   const { connect, isLoading, requireInstall } = useWeb3();
   const { account } = useAccount();
   const { pathname } = useRouter();
-
-  const installMetamask = () => {
-    window.open(
-      "https://metamask.io/download/",
-      "_blank",
-      "noopener,noreferrer"
-    );
-  };
 
   return (
     <section>

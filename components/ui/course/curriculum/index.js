@@ -1,6 +1,7 @@
 import { useAccount } from "@components/hooks/web3";
 import { useWeb3 } from "@components/providers";
 import { Loader } from "@components/ui/common";
+import { installMetamask } from "@utils/installMetamask";
 import Link from "next/link";
 
 const lectures = [
@@ -16,7 +17,7 @@ const accessStatus =
   "px-2 inline-flex text-xs leading-5 font-semibold rounded-full";
 
 const Curriculum = ({ locked, courseState }) => {
-  const { connect, isLoading } = useWeb3();
+  const { connect, isLoading, requireInstall } = useWeb3();
   const { account } = useAccount();
   return (
     <section className="max-w-5xl mx-auto">
@@ -86,12 +87,29 @@ const Curriculum = ({ locked, courseState }) => {
                                 </a>
                               </Link>
                             )}
-                            {courseState === undefined && !account.data && (
+                            {courseState === undefined &&
+                              !account.data &&
+                              !requireInstall && (
+                                <span
+                                  onClick={connect()}
+                                  className="text-yellow-600 hover:text-yellow-900 text-base cursor-pointer"
+                                >
+                                  Connect
+                                </span>
+                              )}
+                            {courseState === undefined && account.data && (
+                              <Link href="/marketplace">
+                                <a className="text-yellow-600 hover:text-yellow-900 text-base cursor-pointer">
+                                  Purchase Course
+                                </a>
+                              </Link>
+                            )}
+                            {requireInstall && (
                               <span
-                                onClick={connect()}
-                                className="text-indigo-500 hover:text-indigo-900 text-base cursor-pointer"
+                                onClick={installMetamask}
+                                className="text-yellow-600 hover:text-yellow-900 text-base cursor-pointer"
                               >
-                                Connect
+                                Install metamask
                               </span>
                             )}
                           </>
